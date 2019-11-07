@@ -1,0 +1,44 @@
+  - title: Cancellations by Week
+    name: Cancellations by Week
+    model: faa_redshift
+    explore: flights
+    type: looker_line
+    fields: [flights.count, flights.arr_week]
+    fill_fields: [flights.arr_week]
+    filters:
+      carriers.name: {{airline_name}}
+      flights.cancelled: Y
+    sorts: [flights.arr_week desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    reference_lines: [{reference_type: line, range_start: max, range_end: min, margin_top: deviation,
+        margin_value: mean, margin_bottom: deviation, label_position: left, color: "#000000",
+        line_value: '500', label: Insurance Payout}]
+    show_null_points: true
+    interpolation: linear
+    listen: {}
+    row: 12
+    col: 0
+    width: 16
+    height: 6

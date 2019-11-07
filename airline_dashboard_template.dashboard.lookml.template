@@ -1,0 +1,103 @@
+- dashboard: airline_dashboard_{{code_friendly_airline_name}}
+  title: {{airline_name}}
+  layout: newspaper
+  elements:
+  - title: Delay Rate by Week
+    name: Delay Rate by Week
+    model: faa_redshift
+    explore: flights
+    type: looker_line
+    fields: [flights.delay_rate, flights.dep_week]
+    fill_fields: [flights.dep_week]
+    filters:
+      carriers.name: {{airline_name}}
+    sorts: [flights.dep_week desc]
+    limit: 500
+    series_types: {}
+    row: 6
+    col: 8
+    width: 8
+    height: 6
+  - title: Weekly Flights
+    name: Weekly Flights
+    model: faa_redshift
+    explore: flights
+    type: looker_line
+    fields: [flights.dep_week, flights.count]
+    fill_fields: [flights.dep_week]
+    filters:
+      carriers.name: {{airline_name}}
+    sorts: [flights.dep_week desc]
+    limit: 500
+    series_types: {}
+    row: 6
+    col: 0
+    width: 8
+    height: 6
+  - title: Cancellation Rate
+    name: Cancellation Rate
+    model: faa_redshift
+    explore: flights
+    type: single_value
+    fields: [flights.cancelled, flights.count]
+    filters:
+      carriers.name: {{airline_name}}
+    sorts: [flights.count desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: calculation_1, label: Calculation 1, expression: 'sum(if(${flights.cancelled}="Y",  ${flights.count},
+          0))  / sum(${flights.count})', value_format: !!null '', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
+    custom_color_enabled: true
+    show_single_value_title: true
+    value_format: 0.00%
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: [flights.count]
+    listen: {}
+    row: 0
+    col: 8
+    width: 4
+    height: 6
+  - title: Delay Rate
+    name: Delay Rate
+    model: faa_redshift
+    explore: flights
+    type: single_value
+    fields: [flights.delay_rate]
+    filters:
+      carriers.name: {{airline_name}}
+    limit: 500
+    custom_color_enabled: true
+    show_single_value_title: true
+    value_format: 0.00%
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: []
+    listen: {}
+    row: 0
+    col: 12
+    width: 4
+    height: 6
+  - name: {{airline_name}} Dashboard
+    type: text
+    title_text: {{airline_name}} Dashboard
+    subtitle_text: Weekly Delay and Cancellation Dashboard
+    body_text: As a valued customer of no-delay.io, we provide {{airline_name}} with
+      a weekly dashboard of delay and cancellation statistics. Please reach out to
+      nelson@no-delay.io with any questions
+    row: 0
+    col: 0
+    width: 8
+    height: 6
