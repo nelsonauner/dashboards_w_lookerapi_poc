@@ -12,12 +12,14 @@ import pystache
 import os
 from pathlib import Path
 
+DIR = os.path.dirname(__file__)
+
 @click.command()
 @click.argument('airline_name')
 def main(airline_name):
-    TEMPLATE_FILENAME = os.path.join(Path.home(), "coalition/join18_hackathon1_faa/airline_dashboard_template.dashboard.lkml.template")
-    ADDITIONAL_CHART = os.path.join(Path.home(), "coalition/join18_hackathon1_faa/airline_dashboard_add_cancellation_graph.template")
-    OUTPUT_FILENAME = os.path.join(Path.home(), "coalition/join18_hackathon1_faa/airline_dashboard_{{airline_name}}.dashboard.lookml")
+    TEMPLATE_FILENAME = os.path.join(DIR, 'airline_dashboard_template.dashboard.lookml.template')
+    ADDITIONAL_CHART = os.path.join(DIR, 'airline_dashboard_add_cancellation_graph.lookml.template')
+    OUTPUT_FILENAME = os.path.join(DIR, 'airline_dashboard_{{airline_name}}.dashboard.lookml')
     LOOKER_ROOT_URL = 'https://hack.looker.com/dashboards/faa_redshift::airline_dashboard_{{airline_name}}'
 
     code_friendly_airline_name = airline_name.lower().replace(" ", "_")
